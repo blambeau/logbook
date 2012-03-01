@@ -1,0 +1,9 @@
+people:
+  - name: Lambeau Bernard
+    hobbies: 
+      - name: ruby
+      - name: guitar
+  - name: Ravi Ramdoyal
+    hobbies:
+      - name: basket
+      - name: painting
