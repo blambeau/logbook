@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span1 arrow arrow-left">
+      <img src="/img/left-arrow.png"/>
+    </div>
+    <div class="span10 middle">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>#</td>
+            <td>n°</td>
+            <td>Prénom</td>
+            <td>Nom</td>
+            <td>Motif</td>
+            <td>Schéma</td>
+            <td>Chambre</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#logs}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{no}}</td>
+            <td>{{first_name}}</td>
+            <td>{{last_name}}</td>
+            <td>{{cause}}</td>
+            <td>{{treatment}}</td>
+            <td>{{room}}</td>
+          </tr>
+          {{/logs}}
+        </tbody>
+      </table>
+    </div>
+    <div class="span1 arrow arrow-right">
+      <img src="/img/right-arrow.png"/>
+    </div>
+  </div>
+</div>

@@ -3,15 +3,31 @@
 <head>
 <title>The Medical Logbook</title>
 <meta charset="utf-8" />
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/css/logbook.css" />
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 </head>
 <script src="/js/jquery-1.7.1.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/underscore.min.js"></script>
+<script src="/js/backbone.min.js"></script>
 <script src="/js/mustache.js"></script>
 <script src="/js/logbook.js"></script>
 <body>
+  <div id="navbar" class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="brand" href="#">The Medical LogBook</a>
+      </div>
+    </div>
+  </div>
+  <div id="log-table"></div>
+  <hr/>
+  <div id="footer" class="row-fluid">
+    <p class="span12">The Medical LogBook &mdash; &copy; The University of Louvain &mdash; 2012</p>
+  </div>
 </body>
 </html>

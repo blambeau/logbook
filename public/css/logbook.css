@@ -1,0 +1,21 @@
+body{
+  padding: 20px;
+}
+#navbar .navbar-inner {
+  height: 40px;
+  padding: 15px 0px;
+}
+#log-table{
+  margin-top: 90px;
+  overflow:auto;
+}
+#log-table .arrow {
+  height: 500px;
+  position: relative;
+  text-align: center;
+  padding-top:100px;
+}
+#footer{
+  color: grey;
+  text-align: center;
+}
