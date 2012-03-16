@@ -4,6 +4,11 @@ module Logbook
 
     set :public_folder, ROOT/:public
 
+    unless environment.to_s == "production"
+      require_relative 'helpers/nocache'
+      use Rack::Nocache
+    end
+
     get '/' do
       send_file settings.public_folder/"index.html"
     end
