@@ -4,6 +4,10 @@ module Logbook
 
     set :public_folder, ROOT/:public
 
+    get '/' do
+      send_file settings.public_folder/"index.html"
+    end
+
     get '/logs' do
       require_relative "helpers/data_generator"
       content_type 'application/json', :charset => 'utf-8'
