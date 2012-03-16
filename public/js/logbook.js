@@ -102,6 +102,7 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
     },
     load: function(){
       this.logs.fetch();
+      this.logTableView.render();
     }
   });
 
