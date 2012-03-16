@@ -71,8 +71,16 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
       "click .arrow-left  img": "swapLeft",
       "click .arrow-right img": "swapRight"
     },
-    swapLeft:  function(){ this.state.swapLeft();  },
-    swapRight: function(){ this.state.swapRight(); },
+    swapLeft:  function(){
+      this.state.swapLeft();
+      $("table").hide('slide', {direction: 'right'}, 100);
+      $("table").show('slide', {direction: 'left'}, 250);
+    },
+    swapRight: function(){
+      this.state.swapRight();
+      $("table").hide('slide', {direction: 'left'}, 100);
+      $("table").show('slide', {direction: 'right'}, 250);
+    },
 
     reset: function(){
       this.state.reset();
