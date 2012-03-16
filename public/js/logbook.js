@@ -47,7 +47,9 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
           var filter = this.get('filter');
           return _.filter(logs, function(t){
             return _.all(filter, function(value, field){
-              return (value == "" || t[field].toString().substr(0, value.length) == value);
+              var search = value.toString().toLowerCase();
+              var source = t[field].toString().toLowerCase();
+              return source.indexOf(search) == 0;
             });
           });
         },
