@@ -15,6 +15,20 @@ body{
   text-align: center;
   padding-top:100px;
 }
+#log-table tr th {
+  text-align: center;
+  padding: 8px 0px 4px 0px;
+}
+#log-table tr.controls th {
+  margin: 0px;
+  padding: 0px 0px 4px 0px;
+}
+#log-table th input {
+  width: 90%;
+  padding: 4px;
+  margin: 0px;
+  border-radius: 0px;
+}
 #footer{
   color: grey;
   text-align: center;

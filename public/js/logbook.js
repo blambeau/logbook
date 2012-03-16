@@ -14,55 +14,101 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
   // The table view
   exports.LogTableView = Backbone.View.extend({
 
+    initialize: function(options) {
+      var model = this.model;
+
+      this.State = Backbone.Model.extend({
+        offset:   function(){ return this.get('offset'); },
+        limit:    function(){ return this.get('limit');  },
+        swapLeft: function(){
+          this.set({offset: Math.max(this.offset() - this.limit(), 0)});
+        },
+        swapRight: function(){
+          this.set({offset: Math.min(this.offset() + this.limit(), this.filteredLogs().length-1)});
+        },
+        filteredLogs: function(){
+          var logs;
+          logs = model.toArray();
+          logs = _.map(logs, function(x){ return x.toJSON(); });
+          logs = this._filterLogs(logs);
+          return logs;
+        },
+        logs: function(){
+          logs = this._sliceLogs(this.filteredLogs());
+          return logs;
+        },
+        _sliceLogs: function(logs){
+          var offset = this.offset();
+          var limit  = this.limit();
+          return logs.slice(offset, offset + limit);
+        },
+        _filterLogs: function(logs){
+          var filter = this.get('filter');
+          return _.filter(logs, function(t){
+            return _.all(filter, function(value, field){
+              return (value == "" || t[field].toString().substr(0, value.length) == value);
+            });
+          });
+        },
+      });
+      this.state = new this.State({ offset: 0, limit:  15, filter: {} });
+      this.state.on('change', this.refresh, this);
+
+      model.on('all', this.render, this);
+    },
+
+    // filtering controller
+    setFilter: function(f){
+      var filter = $.extend({}, this.state.get('filter'), f);
+      this.state.set({offset: 0, filter: filter});
+    },
+
+    // event binding
     events: {
       "click .arrow-left  img": "swapLeft",
       "click .arrow-right img": "swapRight"
     },
+    swapLeft:  function(){ this.state.swapLeft();  },
+    swapRight: function(){ this.state.swapRight(); },
 
-    initialize: function(options) {
-      this.model.on('all', this.render, this);
-      this.State = Backbone.Model.extend({});
-      this.state = new this.State({
-        offset: 0,
-        limit: 15
-      });
-      this.state.on('all', this.render, this);
-    },
-
-    offset: function(){ return this.state.get('offset'); },
-    limit:  function(){ return this.state.get('limit');  },
-
-    getLogs: function() {
-      offset = this.offset();
-      limit  = this.limit();
-      return this.model
-                 .map(function(x){ return x.toJSON(); })
-                 .slice(offset, offset + limit);
-    },
-
-    swapLeft: function(){
-      this.state.set({offset: Math.max(this.offset() - this.limit(), 0)});
-    },
-
-    swapRight: function(){
-      this.state.set({offset: Math.min(this.offset() + this.limit(), this.model.size()-1)});
-    },
-
+    // rendering
     render: function() {
       var view = this;
       $.get('views/log-table.mustache', function(tpl){
-        var shownlogs = view.getLogs(view.state);
-        var htmlText = Mustache.render(tpl, {logs: shownlogs});
-        view.$el.html(htmlText);
+        view.$el.html(tpl);
       })
+      this.refresh();
+    },
+
+    // refresh data
+    refresh: function(){
+      var view  = this;
+      var state = this.state;
+      $.get('views/log-table/tbody.mustache', function(tpl){
+        var htmlText = Mustache.render(tpl, {logs: state.logs()});
+        view.$el.find("tbody").html(htmlText);
+      });
     }
 
   });
 
+  exports.AppView = Backbone.View.extend({
+    initialize: function(){
+      this.logs = new LogBook.Logs;
+      this.logTableView = new LogBook.LogTableView({
+        model: this.logs,
+        el: '#log-table'
+      });
+    },
+    load: function(){
+      this.logs.fetch();
+    }
+  });
+
 })(LogBook);
 
+var logBook;
 $(document).ready(function(){
-  var logs = new LogBook.Logs;
-  var logTableView = new LogBook.LogTableView({model: logs, el: '#log-table'});
-  logs.fetch();
-})
+  logBook = new LogBook.AppView;
+  logBook.load();
+});

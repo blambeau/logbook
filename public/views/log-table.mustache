@@ -4,30 +4,29 @@
       <img src="/img/left-arrow.png"/>
     </div>
     <div class="span10 middle">
-      <table class="table table-striped">
+      <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <td>#</td>
-            <td>n°</td>
-            <td>Prénom</td>
-            <td>Nom</td>
-            <td>Motif</td>
-            <td>Schéma</td>
-            <td>Chambre</td>
+            <th>#</th>
+            <th>n°</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Motif</th>
+            <th>Schéma</th>
+            <th>Chambre</th>
+          </tr>
+          <tr class="controls">
+            <th><input name="id" type="text"/></th>
+            <th><input name="no" type="text"/></th>
+            <th><input name="first_name" type="text"/></th>
+            <th><input name="last_name" type="text"/></th>
+            <th><input name="cause" type="text"/></th>
+            <th><input name="treatment" type="text"/></th>
+            <th><input name="room" type="text"/></th>
           </tr>
         </thead>
         <tbody>
-          {{#logs}}
-          <tr>
-            <td>{{id}}</td>
-            <td>{{no}}</td>
-            <td>{{first_name}}</td>
-            <td>{{last_name}}</td>
-            <td>{{cause}}</td>
-            <td>{{treatment}}</td>
-            <td>{{room}}</td>
-          </tr>
-          {{/logs}}
+          <!-- see log-table/tbody.mustache -->
         </tbody>
       </table>
     </div>
@@ -35,4 +34,13 @@
       <img src="/img/right-arrow.png"/>
     </div>
   </div>
+  <script>
+    $(function(){
+      $('#log-table table tr th input').keyup(function(){
+        filter = {};
+        filter[this.name] = this.value;
+        logBook.logTableView.setFilter(filter);
+      });
+    });
+  </script>
 </div>
