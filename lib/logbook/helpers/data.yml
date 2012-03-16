@@ -1,0 +1,76 @@
+no:
+  - 678098234
+  - 123098543
+  - 285760976
+  - 187387630
+  - 998376372
+  - 625765382
+  - 876325739
+  - 018736293
+  - 836428208
+  - 276538287
+  - 376592837
+  - 837634627
+  - 837649309
+  - 376476393
+  - 398736228
+  - 948722309
+  - 873820209
+first_name:
+  - Bernard
+  - Francois
+  - Axel
+  - Ravi
+  - Renaud
+  - Christophe
+  - Pierre
+  - Marcelle
+  - Elodie
+  - Albert
+  - Marie
+  - Jeaninne
+  - Chistopbalt
+  - Emerick
+  - Aline
+  - Pascaline
+last_name:
+  - Lambeau
+  - Roucoux
+  - van Lamsweerde
+  - Ponsard
+  - Ramdoyal
+  - Damas
+  - De Landsheer
+  - Hubert
+  - Roosen
+  - Bertrand
+  - Serteus
+  - Quitern
+  - Mosabi
+cause:
+  - Adenocar. prostate
+  - Hepatocarcinome
+  - Carc. bronchique
+  - Klatskin
+  - Hodgkin
+  - Romains
+  - Rhume
+  - Hepathite
+  - Cancer du sein
+  - Toux grasse
+  - Saignements
+treatment:
+  - TAX 327
+  - Sorafenib
+  - Carbo etoposide
+  - Transfusion
+  - PVB
+  - Menhir
+  - Un bon grog
+  - Repos
+  - Berthulderp
+  - Hydromel
+room: !ruby/range
+    begin: 300
+    end: 400
+    excl: false
