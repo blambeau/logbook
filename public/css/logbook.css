@@ -4,6 +4,7 @@ body{
 #navbar .navbar-inner {
   height: 40px;
   padding: 15px 0px;
+  padding-left: 50px;
 }
 #log-table{
   margin-top: 90px;

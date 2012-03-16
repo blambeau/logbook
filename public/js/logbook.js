@@ -76,8 +76,8 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
       var view = this;
       $.get('views/log-table.mustache', function(tpl){
         view.$el.html(tpl);
+        view.refresh();
       })
-      this.refresh();
     },
 
     // refresh data
@@ -102,7 +102,6 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
     },
     load: function(){
       this.logs.fetch();
-      this.logTableView.render();
     }
   });
 
