@@ -36,10 +36,16 @@
   </div>
   <script>
     $(function(){
-      $('#log-table table tr th input').keyup(function(){
-        filter = {};
-        filter[this.name] = this.value;
-        logBook.logTableView.setFilter(filter);
+      var controls = $('#log-table table tr th input');
+      controls.keyup(function(e){
+        if (e.which == 27){
+          $(this).val("");
+          logBook.logTableView.reset();
+        } else {
+          filter = {};
+          filter[this.name] = this.value;
+          logBook.logTableView.setFilter(filter);
+        }
       });
     });
   </script>

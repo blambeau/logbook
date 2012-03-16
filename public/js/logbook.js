@@ -18,6 +18,7 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
       var model = this.model;
 
       this.State = Backbone.Model.extend({
+        reset:    function(){ this.set({offset: 0, filter: {}}); },
         offset:   function(){ return this.get('offset'); },
         limit:    function(){ return this.get('limit');  },
         swapLeft: function(){
@@ -70,6 +71,10 @@ var LogBook = (typeof module !== "undefined" && module.exports) || {};
     },
     swapLeft:  function(){ this.state.swapLeft();  },
     swapRight: function(){ this.state.swapRight(); },
+
+    reset: function(){
+      this.state.reset();
+    },
 
     // rendering
     render: function() {
