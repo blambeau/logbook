@@ -1,3 +1,4 @@
+_        = require('underscore')
 Backbone = require('backbone')
 
 class Log extends Backbone.Model
@@ -18,19 +19,42 @@ class LogTableView extends Backbone.View
       filter: {}
     }
 
+    initialize: (options)->
+      this.logs = options.logs || new Logs
+
     # Resets model attributes to the default values
     reset: ->
       this.set(this.defaults)
 
     # Swaps the table at left
-    swapLeft: (min = 0) ->
-      offset = this.get('offset') - this.get('limit')
-      this.set(offset: Math.max(offset, min))
+    swapLeft: ->
+      [limit, offset] = [this.get('limit'), this.get('offset')]
+      newOffset = offset - limit
+      this.set(offset: Math.max(newOffset, 0))
 
     # Swaps the table at right
-    swapRight: (max = 100) ->
-      offset = this.get('offset') + this.get('limit')
-      this.set(offset: Math.min(offset, max));
+    swapRight: ->
+      [limit, offset] = [this.get('limit'), this.get('offset')]
+      newOffset = offset + limit
+      max = this.logs.size() - limit + 1
+      this.set(offset: Math.min(newOffset, max));
+
+    ### PRIVATE ###
+
+    sliceIt: (logs)->
+      [limit, offset] = [this.get('limit'), this.get('offset')]
+      logs[offset...offset+limit]
+
+    filterProc: ->
+      filter  = this.get('filter')
+      (tuple)->
+        _.all filter, (value, field)->
+          search = value.toString().toLowerCase()
+          source = tuple[field].toString().toLowerCase()
+          source.indexOf(search) == 0
+
+    filterIt: (logs)->
+      _.filter logs, this.filterProc()
 
   LogTableView.State = State
 

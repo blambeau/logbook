@@ -12,3 +12,4 @@ Dir["**/*.rb"].each{|file| clean_file(file)}
 Dir["public/js/logbook.js"].each{|file| clean_file(file)}
 Dir["**/*.yml"].each{|file| clean_file(file)}
 Dir["**/*.md"].each{|file| clean_file(file)}
+Dir["**/*.coffee"].each{|file| clean_file(file)}
