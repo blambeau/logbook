@@ -1,12 +1,20 @@
 _        = require('underscore')
 Backbone = require('backbone')
 
+# A single log tuple as a Backbone model.
 class Log extends Backbone.Model
 
+# Collection of logs as a Backbone collection.
 class Logs extends Backbone.Collection
   model: Log,
   url: '/logs'
 
+#
+# Logs view as a filterable and navigable table.
+#
+# This view displays a Logs collection passed under a `model` attribute at construction.
+# It internally maintains a filtered and navigable viewport on that specific collection.
+#
 class LogTableView extends Backbone.View
 
   #
@@ -80,7 +88,12 @@ class LogTableView extends Backbone.View
     filterIt: (logs)->
       _.filter logs, this.filterProc()
 
+  # Export the Viewport class on the LogTableView
   LogTableView.Viewport = Viewport
+
+  initialize: (options)->
+    this.viewport = new Viewport(logs: this.model)
+    this.viewport.on('change', this.refresh, this);
 
 exports.Log          = Log
 exports.Logs         = Logs
