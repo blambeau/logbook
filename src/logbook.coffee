@@ -48,6 +48,10 @@ class LogTableView extends Backbone.View
       newOffset = this.normalizeOffset(offset + limit)
       this.set(offset: newOffset);
 
+    # Sets a specific filter
+    setFilter: (filter)->
+      this.set(filter: filter)
+
     ### PRIVATE ###
 
     normalizeOffset: (offset)->

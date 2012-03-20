@@ -29,6 +29,12 @@ describe "LogTableView.Viewport", ->
     this.viewport.reset()
     expect(this.viewport.get('offset')).toEqual(0)
 
+  describe 'setFilter', ->
+
+    it 'allows setting a filter', ->
+      this.viewport.setFilter(name: "bla")
+      expect(this.viewport.get('filter')).toEqual(name: "bla")
+
   describe 'filterProc', ->
 
     it 'returns a function', ->
