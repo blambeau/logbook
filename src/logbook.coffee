@@ -9,8 +9,14 @@ class Logs extends Backbone.Collection
 
 class LogTableView extends Backbone.View
 
-  # This class encapsulates the state of the table view itself.
-  class State extends Backbone.Model
+  #
+  # Table Viewport.
+  #
+  # This class encapsulates the table viewport, that is, it computes and provides access
+  # to the logs that need to be displayed show at every moment. It takes into account the
+  # current offset, limit and filtering constraints.
+  #
+  class Viewport extends Backbone.Model
 
     # Default state values (no offset, show 15 logs, unfiltered)
     defaults: {
@@ -26,20 +32,34 @@ class LogTableView extends Backbone.View
     reset: ->
       this.set(this.defaults)
 
+    # Returns an array with the logs to show
+    logsToShow: ->
+      this.sliceIt(this.filterIt(this.logs.toArray()))
+
     # Swaps the table at left
     swapLeft: ->
       [limit, offset] = [this.get('limit'), this.get('offset')]
-      newOffset = offset - limit
-      this.set(offset: Math.max(newOffset, 0))
+      newOffset = this.normalizeOffset(offset - limit)
+      this.set(offset: newOffset);
 
     # Swaps the table at right
     swapRight: ->
       [limit, offset] = [this.get('limit'), this.get('offset')]
-      newOffset = offset + limit
-      max = this.logs.size() - limit + 1
-      this.set(offset: Math.min(newOffset, max));
+      newOffset = this.normalizeOffset(offset + limit)
+      this.set(offset: newOffset);
 
     ### PRIVATE ###
+
+    normalizeOffset: (offset)->
+      limit  = this.get('limit')
+      wSize  = this.windowSize()
+      offset = wSize-limit+1 if offset>wSize
+      offset = 0 if offset<0
+      offset
+
+    windowSize: ->
+      logs = this.filterIt(this.logs.toArray())
+      logs.length
 
     sliceIt: (logs)->
       [limit, offset] = [this.get('limit'), this.get('offset')]
@@ -56,7 +76,7 @@ class LogTableView extends Backbone.View
     filterIt: (logs)->
       _.filter logs, this.filterProc()
 
-  LogTableView.State = State
+  LogTableView.Viewport = Viewport
 
 exports.Log          = Log
 exports.Logs         = Logs
